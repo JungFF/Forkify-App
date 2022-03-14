@@ -1,0 +1,25 @@
+{
+  "name": "forkify-app",
+  "version": "1.0.0",
+  "description": "A website to order and edit recipes built with Sass, JavaScript and Node.js!",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JungFF/Forkify-App.git"
+  },
+  "author": "Jung Wang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JungFF/Forkify-App/issues"
+  },
+  "homepage": "https://github.com/JungFF/Forkify-App#readme",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.3.2",
+    "parcel": "^2.3.2",
+    "sass": "^1.26.10"
+  }
+}

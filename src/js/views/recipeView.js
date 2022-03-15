@@ -3,30 +3,60 @@ import fracty from 'fracty';
 
 
 class RecipeView {
-    #parentEl = document.querySelector('.recipe')
-    #data
-    render(data) {
-        this.#data = data;
-        const markup = this.#generateMarkUp();
-        this.clear();
-        this.#parentEl.insertAdjacentHTML('afterbegin', markup);
-        console.log(this.#data);
-    }
-    clear() {
-        this.#parentEl.innerHTML = '';
-    }
-    renderSpinner = function () {
-        const markup = ` <div class="spinner">
+  #parentEl = document.querySelector('.recipe');
+  #data;
+  #errorMessage = 'We could not find that recipe. Please try another one!'
+  #message = ''
+  render(data) {
+    this.#data = data;
+    const markup = this.#generateMarkUp();
+    this.clear();
+    this.#parentEl.insertAdjacentHTML('afterbegin', markup);
+    console.log(this.#data);
+  }
+  clear() {
+    this.#parentEl.innerHTML = '';
+  }
+  renderSpinner() {
+    const markup = ` <div class="spinner">
         <svg>
           <use href="${icons}#icon-loader"></use>
         </svg>
       </div>`
-        this.#parentEl.innerHTML = '';
-        this.#parentEl.insertAdjacentHTML('afterbegin', markup);
-    }
-    #generateMarkUp() {
-        const markup =
-            ` <figure class="recipe__fig">
+    this.#parentEl.innerHTML = '';
+    this.#parentEl.insertAdjacentHTML('afterbegin', markup);
+  }
+  renderError(message = this.#errorMessage) {
+    const markup = `<div class="error">
+    <div>
+      <svg>
+        <use href="${icons}#icon-alert-triangle"></use>
+      </svg>
+    </div>
+    <p>${message}</p>
+  </div>`
+    this.#parentEl.innerHTML = '';
+    this.#parentEl.insertAdjacentHTML('afterbegin', markup);
+  }
+  renderMessage(message = this.#message) {
+    const markup = `<div class="message">
+    <div>
+      <svg>
+        <use href="${icons}#icon-smile"></use>
+      </svg>
+    </div>
+    <p>${message}</p>
+  </div>`
+    this.#parentEl.innerHTML = '';
+    this.#parentEl.insertAdjacentHTML('afterbegin', markup);
+  }
+  addHandlerRender(handler) {
+    const events = ['hashchange', 'load'];
+    events.forEach((e) => window.addEventListener(e, handler));
+  }
+  #generateMarkUp() {
+    const markup =
+      ` <figure class="recipe__fig">
       <img src="${this.#data.image}" alt="${this.#data.title}" class="recipe__img" />
       <h1 class="recipe__title">
         <span>${this.#data.title}</span>
@@ -99,10 +129,10 @@ class RecipeView {
         </svg>
       </a>
     </div>`;
-        return markup;
-    }
-    #generateIngredients(ing) {
-        return `
+    return markup;
+  }
+  #generateIngredients(ing) {
+    return `
       <li class="recipe__ingredient">
       <svg class="recipe__icon">
         <use href="${icons}#icon-check"></use>
@@ -114,6 +144,6 @@ class RecipeView {
       </div>
     </li>
     `
-    }
+  }
 }
 export default new RecipeView();

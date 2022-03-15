@@ -12,10 +12,12 @@ import paginationView from './views/paginationView.js';
 // }
 const controlRecipes = async function () {
   try {
-    // 1) Loading recipe
     const id = window.location.hash.slice(1);
     if (!id) return;
     recipeView.renderSpinner();
+    // 0) Update results view to mark selected search result
+    resultView.update(model.getSearchResultsPage());
+    // 1) Loading recipe
     await model.loadRecipe(id);
     // 2) Rendering recipe
     recipeView.render(model.state.recipe);
@@ -23,6 +25,7 @@ const controlRecipes = async function () {
   catch (err) {
     recipeView.renderError();
   }
+
 }
 const controlSearchResults = async function () {
   try {
@@ -38,7 +41,7 @@ const controlSearchResults = async function () {
     paginationView.render(model.state.search);
   }
   catch (err) {
-    alert(err);
+    resultView.renderError();
   }
 }
 const controlPagination = function (goToPage) {
@@ -47,8 +50,16 @@ const controlPagination = function (goToPage) {
   // 2) Render new pagination buttons
   paginationView.render(model.state.search);
 }
+
+const controlServings = function (newServings) {
+  // Update the recipe servings in state
+  model.updateServings(newServings);
+  // Update the recipe view, only update the text and attributes in DOM rather than the whole page
+  recipeView.update(model.state.recipe);
+}
 const init = function () {
   recipeView.addHandlerRender(controlRecipes);
+  recipeView.addHandlerUpdateServings(controlServings);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
 }

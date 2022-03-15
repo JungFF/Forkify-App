@@ -54,3 +54,11 @@ export const getSearchResultsPage = function (page = state.search.page) {
     console.log(state.search.results.slice(start, end));
     return state.search.results.slice(start, end);
 }
+
+export const updateServings = function (newServings) {
+    state.recipe.ingredients.forEach((ing) => {
+        // newQt = (oldQt / oldServings) * newServings
+        ing.quantity = (ing.quantity / state.recipe.servings) * newServings;
+    })
+    state.recipe.servings = newServings;
+}

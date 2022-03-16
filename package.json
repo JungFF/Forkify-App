@@ -2,10 +2,10 @@
   "name": "forkify-app",
   "version": "1.0.0",
   "description": "A website to order and edit recipes built with Sass, JavaScript and Node.js!",
-  "main": "index.js",
+  "default": "index.html",
   "scripts": {
     "start": "parcel index.html",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html --dist-dir ./dist"
   },
   "repository": {
     "type": "git",

@@ -5,6 +5,7 @@ import 'regenerator-runtime/runtime';
 import recipeView from './views/recipeView.js'
 import searchView from './views/searchView.js'
 import resultView from './views/resultView.js';
+import bookmarksView from './views/bookmarkView.js'
 import paginationView from './views/paginationView.js';
 
 // if (module.hot) {
@@ -17,6 +18,7 @@ const controlRecipes = async function () {
     recipeView.renderSpinner();
     // 0) Update results view to mark selected search result
     resultView.update(model.getSearchResultsPage());
+    bookmarksView.update(model.state.bookmarks);
     // 1) Loading recipe
     await model.loadRecipe(id);
     // 2) Rendering recipe
@@ -57,11 +59,26 @@ const controlServings = function (newServings) {
   // Update the recipe view, only update the text and attributes in DOM rather than the whole page
   recipeView.update(model.state.recipe);
 }
+
+const controlToggleBookmark = function () {
+  // 1) Toggle bookmark
+  if (!model.state.recipe.bookmarked) model.addBookMark(model.state.recipe);
+  else model.deleteBookmark(model.state.recipe.id);
+  // 2) Update recipe view
+  recipeView.update(model.state.recipe);
+  // 3) Render bookmarks
+  bookmarksView.render(model.state.bookmarks);
+}
+const controlBookmarks = function () {
+  bookmarksView.render(model.state.bookmarks);
+}
 const init = function () {
+  bookmarksView.addHandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controlRecipes);
   recipeView.addHandlerUpdateServings(controlServings);
+  recipeView.addHandlerAddBookmark(controlToggleBookmark);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
 }
 init();
-console.log('TEst');
+console.log('start!');

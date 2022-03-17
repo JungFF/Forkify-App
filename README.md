@@ -43,11 +43,11 @@ Forkify is a recipe web app using the Forkify API to allow users to search, view
 
 * LocalStorage keeps the data when users exit the app.
 
-![fuc-5](/Users/wangxiaozhe/Desktop/Forkify-App/README.assets/fuc-5.gif)
+![fuc-5](README.assets/fuc-5.gif)
 
 ### Project Architecture
 
-![截屏2022-03-17 下午2.22.15](README.assets/截屏2022-03-17 下午2.22.15.png)
+![截屏2022-03-17 下午2.22.15](README.assets/Project-Architecture.png)
 
 Built using the MVC Architecture. View class extends the rest of the components. Controller keeps bidirectional dataflow. Model makes http requests. 
 
